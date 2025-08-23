@@ -1,4 +1,3 @@
-```markdown
 
 # E-commerce Product API
 
@@ -8,7 +7,8 @@
 
 * User registration & JWT authentication
 * CRUD for products
-* Search products by name or category
+* Product categories & tags
+* Search products by name, category or tag
 * Pagination & filtering
 * Permissions:
   * Authenticated users can add/update/delete products
@@ -20,6 +20,7 @@
 * Django
 * Django REST Framework
 * djangorestframework-simplejwt (JWT Authentication)
+* django-filter
 * PostgreSQL / SQLite
 
 ### Installation
@@ -50,6 +51,8 @@ python manage.py runserver
 
 ```graphql
 Method	        Endpoint	                Description
+------          --------                    -----------
+
 POST	        /api/register/	            Register a new user
 POST	        /api/login/	                Login and get JWT token
 GET	            /api/products/	            List all products
@@ -57,7 +60,11 @@ POST	        /api/products/	            Create new product
 GET	            /api/products/<id>/	        Get product details
 PUT	            /api/products/<id>/	        Update a product
 DELETE	        /api/products/<id>/	        Delete a product
-GET	            /api/products/search/	    Search products by name/category 
+GET	            /api/products/search/	    Search products by name/category/tag
+GET	            /api/categories/	        List all categories
+POST	        /api/categories/	        Create a new category
+GET	            /api/tags/	                List all tags
+POST	        /api/tags/	                Create a new tag 
 ```
 
 ### Usage
@@ -66,6 +73,19 @@ GET	            /api/products/search/	    Search products by name/category
 ```bash
 curl -X GET http://127.0.0.1:8000/api/products/ \
 -H "Authorization: Bearer <your_token>"
+```
+#### Example Create Product with Category & Tags
+```bash
+curl -X POST http://127.0.0.1:8000/api/products/ \
+-H "Authorization: Bearer <your_token>" \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "iPhone 14",
+  "description": "Latest iPhone",
+  "price": "999.99",
+  "category_id": 1,
+  "tag_ids": [1, 2]
+}'
 ```
 
 ### Deployment
@@ -81,5 +101,4 @@ python manage.py collectstatic
 
 ```bash
 python manage.py test
-```
 ```
