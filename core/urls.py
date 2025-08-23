@@ -16,21 +16,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from products.views import ProductViewSet, RegisterView
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework import routers
+from products.views import ProductViewSet
+from rest_framework.authtoken import views as drf_views
 
-
-router = DefaultRouter()
+# Router for automatic URL routing with ViewSets
+router = routers.DefaultRouter()
 router.register(r'products', ProductViewSet, basename='product')
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include([
-        path('', include(router.urls)),
-        path('register/', RegisterView.as_view(), name='register'), # POST /api/register/
-        path('login/', TokenObtainPairView.as_view(), name='token_obtain'), # POST /api/login/
-        path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    ])),
+
+    # API routes for products
+    path('api/', include(router.urls)),
+
+    # Authentication endpoints
+    path('api/auth/', include('djoser.urls')),
+    path('api/auth/', include('djoser.urls.authtoken')),
+
+    # Optional: DRF's default login view for API testing
+    path('api/api-token-auth/', drf_views.obtain_auth_token),
 ]
