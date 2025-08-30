@@ -1,10 +1,6 @@
 from rest_framework import viewsets
 from .models import Product, Category, Tag
 from .serializers import ProductSerializer, CategorySerializer, TagSerializer
-from django.http import HttpResponse
-
-def pos_view(request):
-    return HttpResponse("POS Page is working!")
 
 
 class CategoryViewSet(viewsets.ModelViewSet):

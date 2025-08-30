@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from products.views import ProductViewSet, pos_view
+from products.views import ProductViewSet
 from rest_framework.authtoken import views as drf_views
 
 # Router for automatic URL routing with ViewSets
@@ -26,9 +26,14 @@ router.register(r'products', ProductViewSet, basename='product')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # API routes for products
     path('api/', include(router.urls)),
+
+    # Authentication endpoints
     path('api/auth/', include('djoser.urls')),
     path('api/auth/', include('djoser.urls.authtoken')),
+
+    # Optional: DRF's default login view for API testing
     path('api/api-token-auth/', drf_views.obtain_auth_token),
-    path('pos/', pos_view),  # <-- Add this
 ]
