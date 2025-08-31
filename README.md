@@ -71,8 +71,14 @@ POST	        /api/tags/	                Create a new tag
 
 #### Example request with JWT token:
 ```bash
-curl -X GET http://127.0.0.1:8000/api/products/ \
--H "Authorization: Bearer <your_token>"
+# Register a new user
+curl -X POST http://127.0.0.1:8000/api/register/ \
+-H "Content-Type: application/json" \
+-d '{
+  "username": "newuser",
+  "email": "newuser@example.com",
+  "password": "password123"
+}'
 ```
 #### Example Create Product with Category & Tags
 ```bash
@@ -97,8 +103,117 @@ python manage.py collectstatic
 ```
 * Deploy to Heroku or PythonAnywhere
 
-### Testing
+### Postman Testing Guide
 
+#### 1. Setup
+
+* Open Postman
+* Start your Django server:
 ```bash
-python manage.py test
+python manage.py runserver
 ```
+* Base URL:
+```cpp
+http://127.0.0.1:8000
+```
+
+#### 2. Authentication
+
+##### Register a user
+* POST http://127.0.0.1:8000/api/users/register/
+* Body → raw → JSON:
+```json
+{
+  "username": "newuser",
+  "email": "newuser@example.com",
+  "password": "mypassword123"
+}
+```
+##### Login with Djoser
+* POST http://127.0.0.1:8000/api/auth/token/login/
+* Body → raw → JSON:
+```json
+{
+  "username": "zubeir",
+  "password": "mypassword123"
+}
+```
+* Copy the access token for authorization in other requests.
+
+#### 3. Products
+
+##### Get all products
+* GET http://127.0.0.1:8000/api/products/
+* 
+##### Create a product
+* POST http://127.0.0.1:8000/api/products/
+* Headers:
+```pgsql
+Authorization: Bearer <your_token>
+Content-Type: application/json
+```
+* Body:
+```json
+{
+  "name": "MacBook Pro",
+  "description": "16-inch, 32GB RAM",
+  "price": "2500.00",
+  "category": 1,
+  "tags": [1, 2]
+}
+```
+
+##### Update a product
+* PUT http://127.0.0.1:8000/api/products/1/
+* Body:
+```json
+{
+  "name": "MacBook Pro 2025",
+  "description": "Upgraded 64GB RAM",
+  "price": "3000.00",
+  "category": 1,
+  "tags": [2]
+}
+```
+
+##### Delete a product
+* DELETE http://127.0.0.1:8000/api/products/1/
+
+#### 4. Categories & Tags
+
+##### List categories
+* GET http://127.0.0.1:8000/api/categories/
+
+##### Create category
+* POST http://127.0.0.1:8000/api/categories/
+* Body:
+```json
+{
+  "name": "Laptops"
+}
+```
+
+##### List tags
+* GET http://127.0.0.1:8000/api/tags/
+
+##### Create tag
+* POST http://127.0.0.1:8000/api/tags/
+* Body:
+```json
+{
+  "name": "Electronics"
+}
+```
+
+#### 5. Search Products
+
+* GET http://127.0.0.1:8000/api/products/search/?name=MacBook
+* Or by category:
+```arduino
+http://127.0.0.1:8000/api/products/search/?category=Laptops
+```
+* Or by tag:
+```arduino
+http://127.0.0.1:8000/api/products/search/?tag=Electronics
+```
+448ecfc54d2f46f38ba42a1bc79cc85639d87ba4

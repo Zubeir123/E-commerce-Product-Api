@@ -1,3 +1,4 @@
+djoser
 asgiref==3.9.1
 dj-database-url==3.0.1
 Django==5.2.5
