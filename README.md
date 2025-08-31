@@ -216,4 +216,3 @@ http://127.0.0.1:8000/api/products/search/?category=Laptops
 ```arduino
 http://127.0.0.1:8000/api/products/search/?tag=Electronics
 ```
-448ecfc54d2f46f38ba42a1bc79cc85639d87ba4
