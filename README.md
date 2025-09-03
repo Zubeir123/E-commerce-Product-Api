@@ -124,9 +124,9 @@ http://127.0.0.1:8000
 * Body → raw → JSON:
 ```json
 {
-  "username": "newuser",
-  "email": "newuser@example.com",
-  "password": "mypassword123"
+  "username": "zubeir",
+  "email": "zubeirabib@example.com",
+  "password": "mom123"
 }
 ```
 ##### Login with Djoser
@@ -135,7 +135,7 @@ http://127.0.0.1:8000
 ```json
 {
   "username": "zubeir",
-  "password": "mypassword123"
+  "password": "mom123"
 }
 ```
 * Copy the access token for authorization in other requests.
